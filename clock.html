@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<style>
+	@import url("https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i");
+#clock {
+  width: 20%;
+  max-width: 200px;
+  margin: 20px auto;
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+  color: #fc9d18;
+  font-size: 48px;
+  font-weight: 900;
+  padding: 10px;
+  border-radius: 10px;
+  text-shadow: 2px 2px 2px #000;
+}
+#clock .text {
+  display: block;
+}
+#clock span {
+  color: #000;
+  font-family: "Lato", sans-serif;
+  display: inline-block;
+  color: #fc9d18;
+  font-size: 48px;
+  font-weight: 900;
+}
+#clock .text {
+  font-size: 15px;
+  color: #363646;
+  text-shadow: 0px 0px 0px #fff;
+}
+
+</style>
+<body>
+
+	<div id="clock"></div>
+	
+
+	<script>
+		window.onload = function(){
+		var deadline = "Oct 07 2017 22:12:42 GMT+0300";
+function getTimeRemember(endtime){
+  var t = Date.parse(endtime) - Date.parse(new Date() );
+  var second = Math.floor( (t/1000) % 60);
+  var minutes = Math.floor( (t/1000/60) % 60);
+  var hour = Math.floor( (t/(1000 *60 * 60 )) % 24);
+  var day = Math.floor( t/(1000 * 60 * 60 * 24) );
+  return{
+    'total':t,
+    'days':day,
+    'hour':hour,
+    'minutes':minutes,
+    'second':second
+  };
+}
+ var s = getTimeRemember(deadline).minutes;
+function initializeClock(id,endtime){
+  var clock = document.getElementById(id);
+  var timeIntervar = setInterval(function(){
+    var t = getTimeRemember(endtime);
+    var hoursclass = "<span>";
+    var houtsclassout = "</span>";
+    clock.innerHTML  = 
+      '<div>' +
+      // hoursclass + t.days + houtsclassout + 
+      // "<span class='text'>дней</span>" + 
+      // '</div>' + ":"+'<div>' +
+      hoursclass + t.hour + houtsclassout + 
+      "<span class='text'>часов</span> " + 
+        '</div>' +":"+ '<div>' +
+      hoursclass + t.minutes +  houtsclassout +
+      "<span class= 'text'>минут</span> " + 
+        '</div>'+":"+ '<div>'+
+      hoursclass + t.second + houtsclassout+
+      "<span class='text'>секунд</span> " +
+        '</div>';
+    
+    if(t.total <=0){
+      clearInterval(timeIntervar);
+  }
+    
+  },1000);
+}
+initializeClock('clock',deadline);
+}
+	</script>
+</body>
+</html>
